@@ -1,6 +1,10 @@
 var mongoose = require('mongoose')
 
 var MovieSchema = new mongoose.Schema({
+    url: {
+        type: String,
+        unique: true
+    },
     name: String,
     playCount: Number,
     duration: Number,
@@ -29,7 +33,6 @@ MovieSchema.statics = {
             // .sort('meta.updateAt')
             .exec(cb)
     },
-
     findById: function(id, cb) {
         return this
             .findOne({
@@ -37,11 +40,10 @@ MovieSchema.statics = {
             })
             .exec(cb)
     },
-
-    findByName: function(name, cb) {
+    findByUrl: function(url, cb) {
         return this
             .findOne({
-                name: name
+                url: url
             })
             .exec(cb)
     }

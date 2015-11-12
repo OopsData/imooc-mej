@@ -1,11 +1,23 @@
+.nav {
+    margin-bottom: 10px
+}
+
 .row {
-    margin-bottom: 40px 
+    margin-bottom: 40px
 }
 
 .add {
     margin-left: 10px
 }
 
-td {
+.myTable td {
     min-width: 80px
+}
+
+.list td {
+    max-width: 100px;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

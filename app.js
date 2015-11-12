@@ -31,26 +31,34 @@ app.get('/', function(req, res) {
         }
 
         res.render('index', {
-            title: 'imooc 首页',
+            title: '首页',
             movies: movies
         })
     })
 })
 
-app.get('/movie/:id', function(req, res) {
-    var id = req.params.id
-    Movie.findById(id, function(err, movie) {
-        res.render('detail', {
-            title: 'imooc ' + movie.title,
-            movie: movie
+app.get('/admin/list_target', function(req, res) {
+    var url = req.query.url;
+
+    if (url) {
+        Movie.findByUrl(url, function(err, movie) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json({
+                    success: 1,
+                    movie: movie
+                })
+            }
         })
-    })
+    }
 })
 
 app.get('/admin/movie', function(req, res) {
     res.render('admin', {
-        title: 'imooc 后台录入页',
+        title: '后台录入页',
         movie: {
+            url: '',
             name: '',
             playCount: '',
             duration: '',
@@ -59,20 +67,6 @@ app.get('/admin/movie', function(req, res) {
             imageUrl: ''
         }
     })
-})
-
-// admin update movie
-app.get('/admin/update/:id', function(req, res) {
-    var id = req.params.id;
-
-    if (id) {
-        Movie.findById(id, function(err, movie) {
-            res.render('admin', {
-                title: 'imooc 后台更新页',
-                movie: movie
-            })
-        })
-    }
 })
 
 // admin post movie
@@ -97,6 +91,7 @@ app.post('/admin/movie/new', function(req, res) {
         })
     } else {
         _movie = new Movie({
+            url: movieObj.url,
             name: movieObj.name,
             playCount: movieObj.playCount,
             duration: movieObj.duration,
@@ -115,6 +110,30 @@ app.post('/admin/movie/new', function(req, res) {
     }
 })
 
+app.get('/movie/:id', function(req, res) {
+    var id = req.params.id
+    Movie.findById(id, function(err, movie) {
+        res.render('detail', {
+            title: movie.id,
+            movie: movie
+        })
+    })
+})
+
+// admin update movie
+app.get('/admin/update/:id', function(req, res) {
+    var id = req.params.id;
+
+    if (id) {
+        Movie.findById(id, function(err, movie) {
+            res.render('admin', {
+                title: '后台更新页',
+                movie: movie
+            })
+        })
+    }
+})
+
 app.get('/admin/list', function(req, res) {
     Movie.fetch(function(err, movies) {
         if (err) {
@@ -122,27 +141,10 @@ app.get('/admin/list', function(req, res) {
         }
 
         res.render('list', {
-            title: 'imooc 列表页',
+            title: '列表页',
             movies: movies
         })
     })
-})
-
-app.get('/admin/list_target', function(req, res) {
-    var name = req.query.name;
-
-    if (name) {
-        Movie.findByName(name, function(err, movie) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.json({
-                    success: 1,
-                    movie: movie
-                })
-            }
-        })
-    }
 })
 
 // list delete movie
