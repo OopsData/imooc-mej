@@ -6,37 +6,29 @@ block content
             form.form-horizontal(method="post", action="/admin/movie/new")
                 input(type="hidden", name="movie[_id]", value="#{movie._id}")
                 .form-group
-                    label.col-sm-2.control-label(for="inputTitle") 电影名字
+                    label.col-sm-2.control-label(for="inputName") 资源名称
                     .col-sm-10
-                        input#inputTitle.form-control(type="text", name="movie[title]", value="#{movie.title}")
+                        input#inputName.form-control(type="text", name="movie[name]", value="#{movie.name}")
                 .form-group
-                    label.col-sm-2.control-label(for="inputDirector") 电影导演
+                    label.col-sm-2.control-label(for="inputPlayCount") 播放次数
                     .col-sm-10
-                        input#inputDirector.form-control(type="text", name="movie[director]", value="#{movie.director}")
+                        input#inputPlayCount.form-control(type="text", name="movie[playCount]", value="#{movie.playCount}")
                 .form-group
-                    label.col-sm-2.control-label(for="inputCountry") 国家
+                    label.col-sm-2.control-label(for="inputDuration") 播放时长
                     .col-sm-10
-                        input#inputCountry.form-control(type="text", name="movie[country]", value="#{movie.country}")
+                        input#inputDuration.form-control(type="text", name="movie[duration]", value="#{movie.duration}")
                 .form-group
-                    label.col-sm-2.control-label(for="inputLanguage") 语种
+                    label.col-sm-2.control-label(for="inputUpCount") 点赞数
                     .col-sm-10
-                        input#inputLanguage.form-control(type="text", name="movie[language]", value="#{movie.language}")
+                        input#inputUpCount.form-control(type="text", name="movie[upCount]", value="#{movie.upCount}")
                 .form-group
-                    label.col-sm-2.control-label(for="inputPoster") 海报地址
+                    label.col-sm-2.control-label(for="inputDownCount") 点踩数
                     .col-sm-10
-                        input#inputPoster.form-control(type="text", name="movie[poster]", value="#{movie.poster}")
+                        input#inputDownCount.form-control(type="text", name="movie[downCount]", value="#{movie.downCount}")
                 .form-group
-                    label.col-sm-2.control-label(for="inputFlash") 片源地址
+                    label.col-sm-2.control-label(for="inputImageUrl") 图片地址
                     .col-sm-10
-                        input#inputFlash.form-control(type="text", name="movie[flash]", value="#{movie.flash}")
-                .form-group
-                    label.col-sm-2.control-label(for="inputYear") 上映年代
-                    .col-sm-10
-                        input#inputYear.form-control(type="text", name="movie[year]", value="#{movie.year}")
-                .form-group
-                    label.col-sm-2.control-label(for="inputSummary") 简介
-                    .col-sm-10
-                        input#inputSummary.form-control(type="text", name="movie[summary]", value="#{movie.summary}")
+                        input#inputImageUrl.form-control(type="text", name="movie[imageUrl]", value="#{movie.imageUrl}")
                 .form-group
                     .col-sm-offset-2.col-sm-10
                         button.btn.btn-default(type="submit") 录入

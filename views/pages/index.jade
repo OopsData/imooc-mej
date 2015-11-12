@@ -2,12 +2,25 @@ extends ../layout
 
 block content
     .container
-        .row
-            each item in movies
-                .col-md-2
-                    .thumbnail
-                        a(href="/movie/#{item._id}")
-                            img(src="#{item.poster}", alt="#{item.title}", width=400, height=400)
-                        .caption
-                            h3 #{item.title}
-                            p: a.btn.btn-primary(href="/movie/#{item._id}", role="button") 观看预告片
+        .row.col-xs-6
+            h4 输入资源名称
+            .form-group
+                .col-xs-7
+                    input.form-control.resource(type="text" placeholder="大好时光")
+                .col-xs-5
+                    button.btn.btn-primary.search(type="button") 搜索
+                    a.btn.btn-primary.add(href="/admin/movie") 增加
+        .row.col-xs-9
+            table.table.table-hover.table-border.myTable
+                thead
+                    tr 
+                        th 资源名称
+                        th 播放数量
+                        th 播放时长
+                        th 点赞数
+                        th 点踩数
+                        th 图片地址
+                tbody
+                    
+    script(src="/js/admin.js")
+

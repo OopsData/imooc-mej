@@ -8,7 +8,7 @@ var port = process.env.PORT || 3000
 var app = express()
 var bodyParser = require('body-parser');
 
-mongoose.connect('mongodb://localhost/imooc')
+mongoose.connect('mongodb://localhost/imooc-mej')
 
 app.set('views', './views/pages')
 app.set('view engine', 'jade')
@@ -51,14 +51,12 @@ app.get('/admin/movie', function(req, res) {
     res.render('admin', {
         title: 'imooc 后台录入页',
         movie: {
-            title: '',
-            director: '',
-            country: '',
-            year: '',
-            poster: '',
-            flash: '',
-            summary: '',
-            language: ''
+            name: '',
+            playCount: '',
+            duration: '',
+            upCount: '',
+            downCount: '',
+            imageUrl: ''
         }
     })
 })
@@ -94,19 +92,17 @@ app.post('/admin/movie/new', function(req, res) {
                     console.log(err);
                 }
 
-                res.redirect('/movie/' + movie._id)
+                res.redirect('/')
             })
         })
     } else {
         _movie = new Movie({
-            director: movieObj.director,
-            title: movieObj.title,
-            country: movieObj.country,
-            language: movieObj.language,
-            year: movieObj.year,
-            poster: movieObj.poster,
-            summary: movieObj.summary,
-            flash: movieObj.flash
+            name: movieObj.name,
+            playCount: movieObj.playCount,
+            duration: movieObj.duration,
+            upCount: movieObj.upCount,
+            downCount: movieObj.downCount,
+            imageUrl: movieObj.imageUrl
         })
 
         _movie.save(function(err, movie) {
@@ -114,7 +110,7 @@ app.post('/admin/movie/new', function(req, res) {
                 console.log(err);
             }
 
-            res.redirect('/movie/' + movie._id)
+            res.redirect('/')
         })
     }
 })
@@ -132,16 +128,37 @@ app.get('/admin/list', function(req, res) {
     })
 })
 
+app.get('/admin/list_target', function(req, res) {
+    var name = req.query.name;
+
+    if (name) {
+        Movie.findByName(name, function(err, movie) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json({
+                    success: 1,
+                    movie: movie
+                })
+            }
+        })
+    }
+})
+
 // list delete movie
 app.delete('/admin/list', function(req, res) {
     var id = req.query.id;
 
     if (id) {
-        Movie.remove({_id: id}, function(err, movie) {
+        Movie.remove({
+            _id: id
+        }, function(err, movie) {
             if (err) {
                 console.log(err);
             } else {
-                res.json({success: 1})
+                res.json({
+                    success: 1
+                })
             }
         })
     }
