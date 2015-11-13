@@ -22,8 +22,10 @@ module.exports = function(app) {
     app.get('/admin/user/list', User.signinRequired, User.adminRequired, User.list)
 
     // movie model
-    app.get('/admin/movie/crawl', Movie.crawl)
-    app.get('/admin/movie/list_target', Movie.search)
+    // crawl from internet and store them into mongo
+    app.get('/admin/movie/crawl', User.signinRequired, User.adminRequired, Movie.crawl)
+    // hit search button, and get data from mongo
+    app.get('/admin/movie/list_target', User.signinRequired, User.adminRequired, Movie.search)
     app.get('/movie/:id', Movie.detail)
     app.get('/admin/movie', User.signinRequired, User.adminRequired, Movie.new)
     app.get('/admin/movie/update/:id', User.signinRequired, User.adminRequired, Movie.update)

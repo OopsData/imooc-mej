@@ -1,5 +1,16 @@
 var Movie = require('../models/movie')
 var _ = require('underscore')
+var request = require('request')
+var async = require('async')
+
+function acquireData(data) {
+    var reg = /Q.PageInfo.playPageInfo\s=\s([^;]*)\;/;
+    data = data
+            .match(reg)[0]
+            .replace(reg, '$1');
+    data = eval('(' + data + ')');
+    return data;
+}
 
 exports.detail = function(req, res) {
     var id = req.params.id
@@ -134,9 +145,43 @@ exports.crawl = function(req, res) {
     var url = req.query.url;
 
     if (url) {
-        res.json({
-            success: 1,
-            data: '123'
-        })
+        async.waterfall([
+            function(cb) {
+                var iqiyiUrl = url;
+
+                request(iqiyiUrl, function(error, response, body) {
+                    if (!error && response.statusCode === 200) {
+                        var ret = acquireData(body);
+                        cb(null, ret);
+                    } else {
+                        console.log(response.statusCode);
+                    }
+                });
+            },
+            function(data, cb) {
+                var dataUrl = 'http://mixer.video.iqiyi.com/jp/recommend/videos?'
+                            + 'referenceId=' + data.tvId
+                            + '&albumId=' + data.albumId
+                            + '&channelId=2&cookieId=&withRefer=true&area=zebra&size=10&type=video&pru=&locale=&playPlatform=PC_QIYI';
+
+                request(dataUrl, function(error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        // res.json({
+                        //     success: 1,
+                        //     data: body
+                        // })
+                        var reg = /var\s*tvInfoJs\s*=\s*()/
+                        var data = body.replace(reg, '$1')
+                        data = eval('(' + data + ')')
+                        cb(null, data.mixinVideos[0].name);
+                    } else {
+                        console.log(response.statusCode);
+                    }
+                })
+            },
+            function(data, cb) {
+                console.log(data);
+            }
+        ]);
     }
 }

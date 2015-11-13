@@ -77,7 +77,6 @@ exports.logout = function(req, res) {
 // middleware for user
 exports.signinRequired = function(req, res, next) {
     var user = req.session.user
-    console.log('aaaa' + req.session);
     if (!user) {
         return res.redirect('/signin')
     }

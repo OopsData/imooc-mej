@@ -9,8 +9,6 @@ var mongoStore = require('connect-mongo')(session)
 var port = process.env.PORT || 3000
 var app = express()
 var bodyParser = require('body-parser');
-var request = require('request')
-var async = require('async')
 
 mongoose.connect(dbUrl)
 
