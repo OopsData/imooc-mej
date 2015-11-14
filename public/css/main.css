@@ -11,7 +11,7 @@
 }
 
 .myTable td {
-    min-width: 80px
+    max-width: 150px
 }
 
 .list td {

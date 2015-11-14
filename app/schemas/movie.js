@@ -5,12 +5,14 @@ var MovieSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    name: String,
+    subtitle: String,
     playCount: Number,
     duration: Number,
     upCount: Number,
     downCount: Number,
-    imageUrl: String,
+    commentCount: Number,
+    shareCount: Number,
+    score: Number,
     meta: {
         createAt: {
             type: Date,
@@ -42,16 +44,13 @@ MovieSchema.statics = {
     },
     findById: function(id, cb) {
         return this
-            .findOne({
-                _id: id
-            })
+            .findOne({_id: id})
             .exec(cb)
     },
     findByUrl: function(url, cb) {
         return this
-            .findOne({
-                url: url
-            })
+            .find({url: url})
+            // .sort('meta.updateAt')
             .exec(cb)
     }
 }

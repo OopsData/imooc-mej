@@ -10,9 +10,9 @@ block content
                     .col-sm-10
                         input#inputUrl.form-control(type="text", name="movie[url]", value="#{movie.url}")
                 .form-group
-                    label.col-sm-2.control-label(for="inputName") 资源名称
+                    label.col-sm-2.control-label(for="inputSubtitle") 资源名称
                     .col-sm-10
-                        input#inputName.form-control(type="text", name="movie[name]", value="#{movie.name}")
+                        input#inputSubtitle.form-control(type="text", name="movie[subtitle]", value="#{movie.subtitle}")
                 .form-group
                     label.col-sm-2.control-label(for="inputPlayCount") 播放次数
                     .col-sm-10
@@ -30,9 +30,17 @@ block content
                     .col-sm-10
                         input#inputDownCount.form-control(type="text", name="movie[downCount]", value="#{movie.downCount}")
                 .form-group
-                    label.col-sm-2.control-label(for="inputImageUrl") 图片地址
+                    label.col-sm-2.control-label(for="inputCommentCount") 评论数
                     .col-sm-10
-                        input#inputImageUrl.form-control(type="text", name="movie[imageUrl]", value="#{movie.imageUrl}")
+                        input#inputCommentCount.form-control(type="text", name="movie[commentCount]", value="#{movie.commentCount}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputShareCount") 分享数
+                    .col-sm-10
+                        input#inputShareCount.form-control(type="text", name="movie[shareCount]", value="#{movie.shareCount}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputScore") 得分
+                    .col-sm-10
+                        input#inputScore.form-control(type="text", name="movie[score]", value="#{movie.score}")
                 .form-group
                     .col-sm-offset-2.col-sm-10
                         button.btn.btn-default(type="submit") 录入
