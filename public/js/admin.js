@@ -16,8 +16,7 @@ $(function() {
                         }
                     }
             })
-    })
-
+        })
     $('.search')
         .click(function() {
             var target = $('.resource').val()
@@ -43,24 +42,54 @@ $(function() {
                                      +  '<td>' + movie[i].score + '</td>'
                             }
                         }
+                        $('.myTable tbody').html(html) 
+                    } else {
+                        location.href = '/signin'
                     }
-                    $('.myTable tbody').html(html) 
                 })
         })
-
-    $('.track')
+    $('.close')
+        .click(function() {
+            $(".alert").removeClass("show").addClass("hide");
+            $('.alert >span').html('')
+        })
+    $('.start_track')
         .click(function() {
             var target = $('.resource').val()
-
+            
+            $('.alert >span').html("已经开始跟踪 " + target)
+            $(".alert").removeClass("hide").addClass("show");
+            
             $.ajax({
                 type: 'GET',
-                url: '/admin/movie/crawl?url=' + target
+                url: '/admin/movie/crawl' 
+                    + '?url=' + target
+                    + '&stop=0'
                 })
                 .done(function(results) {
                     if (results.success === 1) {
                         console.log(results.data);
                     } else {
-                        // if not signed in, return to signin page
+                        location.href = '/signin'
+                    }
+                })
+        })
+    $('.stop_track')
+        .click(function() {
+            var target = $('.resource').val()
+            
+            $('.alert >span').html("已经停止跟踪 " + target)
+            
+            $.ajax({
+                type: 'GET',
+                url: '/admin/movie/crawl' 
+                        + '?url=' + target
+                        + '&stop=1'
+                })
+                .done(function(results) {
+                    if (results.success === 1) {
+                        console.log(results.data);
+                    } else {
                         location.href = '/signin'
                     }
                 })

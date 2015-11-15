@@ -9,10 +9,8 @@ module.exports = function(app) {
         app.locals.user = _user
         next()
     })
-
     // index
     app.get('/', Index.index)
-
     // user model
     app.post('/user/signup', User.signup)
     app.post('/user/signin', User.signin)
@@ -20,7 +18,6 @@ module.exports = function(app) {
     app.get('/signup', User.showSignup)
     app.get('/logout', User.logout)
     app.get('/admin/user/list', User.signinRequired, User.adminRequired, User.list)
-
     // movie model
     // crawl from internet and store them into mongo
     app.get('/admin/movie/crawl', User.signinRequired, User.adminRequired, Movie.crawl)

@@ -1,10 +1,7 @@
 var mongoose = require('mongoose')
 
 var MovieSchema = new mongoose.Schema({
-    url: {
-        type: String,
-        unique: true
-    },
+    url: String,
     subtitle: String,
     playCount: Number,
     duration: Number,
