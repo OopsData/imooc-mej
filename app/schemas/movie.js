@@ -47,7 +47,7 @@ MovieSchema.statics = {
     findByUrl: function(url, cb) {
         return this
             .find({url: url})
-            // .sort('meta.updateAt')
+            .sort('meta.updateAt')
             .exec(cb)
     }
 }

@@ -53,7 +53,7 @@ $(function() {
             $(".alert").removeClass("show").addClass("hide");
             $('.alert >span').html('')
         })
-    $('.start_track')
+    $('.startTrack')
         .click(function() {
             var target = $('.resource').val()
             
@@ -62,12 +62,33 @@ $(function() {
             
             $.ajax({
                 type: 'get',
-                url: 'http://localhost:3001/crawl?url=' + target,
+                url: 'http://localhost:3001/crawl' +
+                     '?url=' + target +
+                     '&trackable=1',
                 dataType: 'jsonp'
             })
             .done(function(data) {
-                console.log(data);
-                // location.href = '/signin'
+                // console.log(data);
+                
+            })
+        })
+    $('.stopTrack')
+        .click(function() {
+            var target = $('.resource').val()
+            
+            $('.alert >span').html("不再跟踪 " + target)
+            $(".alert").removeClass("hide").addClass("show");
+            
+            $.ajax({
+                type: 'get',
+                url: 'http://localhost:3001/crawl' +
+                     '?url=' + target +
+                     '&trackable=0',
+                dataType: 'jsonp'
+            })
+            .done(function(data) {
+                // console.log(data);
+                
             })
         })
 })
