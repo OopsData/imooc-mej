@@ -61,37 +61,13 @@ $(function() {
             $(".alert").removeClass("hide").addClass("show");
             
             $.ajax({
-                type: 'GET',
-                url: '/admin/movie/crawl' 
-                    + '?url=' + target
-                    + '&stop=0'
-                })
-                .done(function(results) {
-                    if (results.success === 1) {
-                        console.log(results.data);
-                    } else {
-                        location.href = '/signin'
-                    }
-                })
-        })
-    $('.stop_track')
-        .click(function() {
-            var target = $('.resource').val()
-            
-            $('.alert >span').html("已经停止跟踪 " + target)
-            
-            $.ajax({
-                type: 'GET',
-                url: '/admin/movie/crawl' 
-                        + '?url=' + target
-                        + '&stop=1'
-                })
-                .done(function(results) {
-                    if (results.success === 1) {
-                        console.log(results.data);
-                    } else {
-                        location.href = '/signin'
-                    }
-                })
+                type: 'get',
+                url: 'http://localhost:3001/crawl?url=' + target,
+                dataType: 'jsonp'
+            })
+            .done(function(data) {
+                console.log(data);
+                // location.href = '/signin'
+            })
         })
 })

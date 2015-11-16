@@ -43,4 +43,4 @@ require('./config/routes')(app)
 
 app.listen(port)
 
-console.log('imooc started on port ' + port);
+console.log('web page started on port ' + port);
