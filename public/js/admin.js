@@ -62,10 +62,9 @@ $(function() {
             
             $.ajax({
                 type: 'get',
-                url: 'http://localhost:3001/crawl' +
+                url: '/admin/track' +
                      '?url=' + target +
-                     '&trackable=1',
-                dataType: 'jsonp'
+                     '&trackable=1'
             })
             .done(function(data) {
                 // console.log(data);
@@ -81,10 +80,9 @@ $(function() {
             
             $.ajax({
                 type: 'get',
-                url: 'http://localhost:3001/crawl' +
+                url: '/admin/track' +
                      '?url=' + target +
-                     '&trackable=0',
-                dataType: 'jsonp'
+                     '&trackable=0'
             })
             .done(function(data) {
                 // console.log(data);

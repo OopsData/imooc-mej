@@ -18,11 +18,11 @@ exports.signup = function(req, res) {
 
     User.find({
         name: _user.name
-    }, function(err, user) {
+    }, function(err, users) {
         if (err) {
             console.log(err);
         }
-        if (!user) {
+        if (users) {
             return res.redirect('/signup')
         } else {
             var user = new User(_user)
