@@ -1,10 +1,30 @@
 $(function() {
+    $('.del')
+        .click(function(e) {
+            var target = $(e.target)
+            var id = target.data('id')
+            var tr = $('.item-id-' + id)
+
+            $.ajax({
+                    type: 'DELETE',
+                    url: '/admin/trackable/list?id=' + id
+                })
+                .done(function(results) {
+                    if (results.success === 1) {
+                        if (tr.length > 0) {
+                            tr.remove()
+                        }
+                    }
+                })
+        })
     $('.start-track')
         .click(function() {
-            var target = $('.resource').text()
-            
-            $('.start-track').addClass('active')
-            $('.stop-track').removeClass('active')
+            var tr = $(this).parent()
+            var target = tr.siblings('.resource').text()
+            tr.siblings().eq(1).text('进行中')
+
+            $(this).addClass('active')
+            $(this).siblings('.stop-track').removeClass('active')
 
             $.ajax({
                     type: 'get',
@@ -19,10 +39,12 @@ $(function() {
         })
     $('.stop-track')
         .click(function() {
-            var target = $('.resource').text()
+            var tr = $(this).parent()
+            var target = tr.siblings('.resource').text()
+            tr.siblings().eq(1).text('已停止')
 
-            $('.stop-track').addClass('active')
-            $('.start-track').removeClass('active')
+            $(this).addClass('active')
+            $(this).siblings('.start-track').removeClass('active')
 
             $.ajax({
                     type: 'get',

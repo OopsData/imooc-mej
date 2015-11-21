@@ -16,24 +16,25 @@ exports.showSignin = function(req, res) {
 exports.signup = function(req, res) {
     var _user = req.body.user
 
-    User.find({
-        name: _user.name
-    }, function(err, users) {
-        if (err) {
-            console.log(err);
-        }
-        if (users) {
-            return res.redirect('/signup')
-        } else {
-            var user = new User(_user)
-            user.save(function(err, user) {
-                if (err) {
-                    console.log(err);
-                }
-                res.redirect('/')
-            })
-        }
-    })
+    User
+        .find({
+            name: _user.name
+        }, function(err, users) {
+            if (err) {
+                console.log(err);
+            }
+            if (users) {
+                return res.redirect('/signup')
+            } else {
+                var user = new User(_user)
+                user.save(function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    res.redirect('/')
+                })
+            }
+        })
 }
 
 // sign in
@@ -42,35 +43,37 @@ exports.signin = function(req, res) {
     var name = _user.name
     var password = _user.password
 
-    User.findOne({
-        name: name
-    }, function(err, user) {
-        if (err) {
-            console.log(err);
-        }
-        if (!user) {
-            return res.redirect('/signin')
-        }
-        user.comparePassword(password, function(err, isMatch) {
+    User
+        .findOne({
+            name: name
+        }, function(err, user) {
             if (err) {
                 console.log(err);
             }
-            if (isMatch) {
-                req.session.user = user
-
-                return res.redirect('/')
-            } else {
+            if (!user) {
                 return res.redirect('/signin')
-                console.log('Password is not matched');
             }
+            user
+                .comparePassword(password, function(err, isMatch) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    if (isMatch) {
+                        req.session.user = user
+
+                        return res.redirect('/')
+                    } else {
+                        return res.redirect('/signin')
+                        console.log('Password is not matched');
+                    }
+                })
         })
-    })
 }
 
 // log out
 exports.logout = function(req, res) {
     delete req.session.user
-    // delete app.locals.user
+        // delete app.locals.user
     res.redirect('/')
 }
 
@@ -94,14 +97,15 @@ exports.adminRequired = function(req, res, next) {
 }
 
 exports.list = function(req, res) {
-    User.fetch(function(err, users) {
-        if (err) {
-            console.log(err);
-        }
+    User
+        .fetch(function(err, users) {
+            if (err) {
+                console.log(err);
+            }
 
-        res.render('userlist', {
-            title: '用户列表页',
-            users: users
+            res.render('userlist', {
+                title: '用户列表页',
+                users: users
+            })
         })
-    })
 }

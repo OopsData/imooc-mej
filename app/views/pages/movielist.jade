@@ -3,21 +3,18 @@ extends ../layout
 block content
     .container
         .row
-            table.table.table-hover.table-border.list(style="table-layout:fixed")
+            table.table.table-hover.table-border.list
                 thead
                     tr 
                         th 资源名称
                         th 播放数量
                         th 播放时长
                         th 点赞数
-                        //- th 录入时间
                         th 点踩数
                         th 评论数
                         th 分享数
                         th 得分
-                        th 查看
-                        th 更新
-                        th 删除
+                        th 操作
                 tbody
                     each item in movies
                         tr(class="item-id-#{item._id}")
@@ -29,8 +26,6 @@ block content
                             td #{item.commentCount}
                             td #{item.shareCount}
                             td #{item.score}
-                            //- td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
-                            td: a(target="_blank", href="../../movie/#{item._id}") 查看
-                            td: a(target="_blank", href="../movie/update/#{item._id}") 修改
-                            td
-                                button.btn.btn-danger.del(type="button", data-id="#{item._id}") 删除
+                            td.op
+                                .btn.btn-danger.btn-sm.del(data-id="#{item._id}") 删除
+    script(src="/js/movie.js")  

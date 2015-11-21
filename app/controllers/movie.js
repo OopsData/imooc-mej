@@ -1,5 +1,14 @@
 var Movie = require('../models/movie')
-var _ = require('underscore')
+
+/* {{{ private function _extend() */
+var _extend = function(a, b) {
+    a = a || {};
+    for (var i in b) {
+        a[i] = b[i];
+    }
+    return a;
+};
+/* }}} */
 
 exports.detail = function(req, res) {
     var id = req.params.id
@@ -11,54 +20,55 @@ exports.detail = function(req, res) {
     })
 }
 exports.new = function(req, res) {
-    res.render('admin', {
-        title: '后台录入页',
-        movie: {
-            url: '',
-            subtitle: '',
-            playCount: '',
-            duration: '',
-            upCount: '',
-            downCount: '',
-            shareCount: '',
-            score: '',
-            commentCount: ''
-        }
-    })
-}
-// admin update movie
-exports.update = function(req, res) {
-    var id = req.params.id;
-
-    if (id) {
-        Movie.findById(id, function(err, movie) {
-            res.render('admin', {
-                title: '后台更新页',
-                movie: movie
-            })
+        res.render('admin', {
+            title: '后台录入页',
+            movie: {
+                url: '',
+                subtitle: '',
+                playCount: '',
+                duration: '',
+                upCount: '',
+                downCount: '',
+                shareCount: '',
+                score: '',
+                commentCount: ''
+            }
         })
     }
-}
-// admin post movie
+    // admin update movie
+exports.update = function(req, res) {
+        var id = req.params.id;
+
+        if (id) {
+            Movie.findById(id, function(err, movie) {
+                res.render('admin', {
+                    title: '后台更新页',
+                    movie: movie
+                })
+            })
+        }
+    }
+    // admin post movie
 exports.save = function(req, res) {
     var id = req.body.movie._id
     var movieObj = req.body.movie
     var _movie
     if (id !== 'undefined') {
-        Movie.findById(id, function(err, movie) {
-            if (err) {
-                console.log(err);
-            }
-
-            _movie = _.extend(movie, movieObj)
-            _movie.save(function(err, movie) {
+        Movie
+            .findById(id, function(err, movie) {
                 if (err) {
                     console.log(err);
                 }
 
-                res.redirect('/movie/' + movie._id)
+                _movie = _extend(movie, movieObj)
+                _movie.save(function(err, movie) {
+                    if (err) {
+                        console.log(err);
+                    }
+
+                    res.redirect('/movie/' + movie._id)
+                })
             })
-        })
     } else {
         _movie = new Movie({
             url: movieObj.url,
@@ -72,58 +82,62 @@ exports.save = function(req, res) {
             shareCount: movieObj.shareCount
         })
 
-        _movie.save(function(err, movie) {
-            if (err) {
-                console.log(err);
-            }
+        _movie
+            .save(function(err, movie) {
+                if (err) {
+                    console.log(err);
+                }
 
-            res.redirect('/')
-        })
+                res.redirect('/')
+            })
     }
 }
 exports.list = function(req, res) {
-    Movie.fetch(function(err, movies) {
-        if (err) {
-            console.log(err);
-        }
+        Movie
+            .fetch(function(err, movies) {
+                if (err) {
+                    console.log(err);
+                }
 
-        res.render('movielist', {
-            title: '资源列表页',
-            movies: movies
-        })
-    })
-}
-// list delete movie
+                res.render('movielist', {
+                    title: '资源列表页',
+                    movies: movies
+                })
+            })
+    }
+    // list delete movie
 exports.del = function(req, res) {
     var id = req.query.id;
 
     if (id) {
-        Movie.remove({
-            _id: id
-        }, function(err, movie) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.json({
-                    success: 1
-                })
-            }
-        })
+        Movie
+            .remove({
+                _id: id
+            }, function(err, movie) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json({
+                        success: 1
+                    })
+                }
+            })
     }
 }
 exports.search = function(req, res) {
     var url = req.query.url;
 
     if (url) {
-        Movie.findByUrl(url, function(err, movie) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.json({
-                    success: 1,
-                    movie: movie
-                })
-            }
-        })
+        Movie
+            .findByUrl(url, function(err, movie) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json({
+                        success: 1,
+                        movie: movie
+                    })
+                }
+            })
     }
 }

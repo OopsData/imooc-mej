@@ -7,19 +7,17 @@ block content
                 thead
                     tr 
                         th 资源名称
+                        th 当前状态
+                        th 下次同步时间
                         th 操作
                 tbody
                     each item in trackable
                         tr(class="item-id-#{item._id}")
                             td.resource #{item.url}
-                            td.op 
-                                if item.state
-                                    .btn.btn-success.btn-sm.start-track.active 开始
-                                else
-                                    .btn.btn-success.btn-sm.start-track 开始
-                                unless item.state
-                                    .btn.btn-warning.btn-sm.stop-track.active 停止
-                                else
-                                    .btn.btn-warning.btn-sm.stop-track 停止
+                            td #{item.state==true?'进行中':'已停止'}
+                            td #{item.next_sync_time==0?'--':item.next_sync_time}
+                            td.op
+                                .btn.btn-success.btn-sm.start-track(class="#{item.state==true?'active':''}") 开始
+                                .btn.btn-warning.btn-sm.stop-track(class="#{item.state==false?'active':''}") 停止
                                 .btn.btn-danger.btn-sm.del(data-id="#{item._id}") 删除
     script(src="/js/track.js")  
