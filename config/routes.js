@@ -30,5 +30,6 @@ module.exports = function(app) {
     app.get('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.list)
     app.delete('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.del)
     app.get('/admin/movie/list_target', User.signinRequired, User.adminRequired, Movie.search)
-    app.get('/admin/track', User.signinRequired, User.adminRequired, Trackable.track)
+    app.get('/admin/trackable', User.signinRequired, User.adminRequired, Trackable.track)
+    app.get('/admin/trackable/list', User.signinRequired, User.adminRequired, Trackable.list)
 }

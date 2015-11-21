@@ -8,7 +8,7 @@ exports.track = function(req, res) {
         state: state
     }
     var _trackable
-    
+
     if (url) {
         Trackable.findByUrl(url, function(err, data) {
             if (err) {
@@ -34,4 +34,16 @@ exports.track = function(req, res) {
             }
         })
     }
+}
+exports.list = function(req, res) {
+    Trackable.find({}, function(err, trackable) {
+        if (err) {
+            console.log(err);
+        }
+
+        res.render('tracklist', {
+            title: '跟踪列表页',
+            trackable: trackable
+        })
+    })
 }

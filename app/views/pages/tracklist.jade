@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            table.table.table-hover.table-border.list.track
+                thead
+                    tr 
+                        th 资源名称
+                        th 操作
+                tbody
+                    each item in trackable
+                        tr(class="item-id-#{item._id}")
+                            td.resource #{item.url}
+                            td.op 
+                                if item.state
+                                    .btn.btn-success.btn-sm.start-track.active 开始
+                                else
+                                    .btn.btn-success.btn-sm.start-track 开始
+                                unless item.state
+                                    .btn.btn-warning.btn-sm.stop-track.active 停止
+                                else
+                                    .btn.btn-warning.btn-sm.stop-track 停止
+                                .btn.btn-danger.btn-sm.del(data-id="#{item._id}") 删除
+    script(src="/js/track.js")  

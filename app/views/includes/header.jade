@@ -1,13 +1,15 @@
 .container
     .page-header
-        h2.text-primary= title
+        //- h2.text-primary= title
         a(href="/") 首页
         span &nbsp;|&nbsp;
-        a(href="/admin/movie/list") 列表页
+        a(href="/admin/movie/list") 资源列表页
+        span &nbsp;|&nbsp;
+        a(href="/admin/trackable/list") 跟踪列表页
 .navbar.navbar-default.navbar-fixed-bottom
     .container
         .navbar-header
-            a.navbar-brand(href="/") 提供专门为您订制的数据
+            a.navbar-brand(href="/") ABCDE                
         if user
             p.navbar-text.navbar-right
                 span 欢迎您，#{user.name}

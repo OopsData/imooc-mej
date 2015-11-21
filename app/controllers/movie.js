@@ -1,14 +1,6 @@
 var Movie = require('../models/movie')
 var _ = require('underscore')
 
-function acquireData(data) {
-    var reg = /Q.PageInfo.playPageInfo\s=\s([^;]*)\;/;
-    data = data
-            .match(reg)[0]
-            .replace(reg, '$1');
-    data = eval('(' + data + ')');
-    return data;
-}
 exports.detail = function(req, res) {
     var id = req.params.id
     Movie.findById(id, function(err, movie) {
@@ -95,8 +87,8 @@ exports.list = function(req, res) {
             console.log(err);
         }
 
-        res.render('list', {
-            title: '列表页',
+        res.render('movielist', {
+            title: '资源列表页',
             movies: movies
         })
     })
