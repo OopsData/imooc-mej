@@ -16,11 +16,15 @@
     margin-left: 10px;
 }
 
+.form-group .btn {
+    margin-right: 10px
+}
+
 .myTable td {
     max-width: 150px
 }
 
-.list th,td {
+th,td {
     text-align: center;
     word-break: keep-all;
     white-space: nowrap;

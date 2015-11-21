@@ -46,19 +46,18 @@ exports.track = function(req, res) {
     }
 }
 exports.list = function(req, res) {
-        Trackable
-            .find({}, function(err, trackable) {
-                if (err) {
-                    console.log(err);
-                }
+    Trackable
+        .find({}, function(err, trackable) {
+            if (err) {
+                console.log(err);
+            }
 
-                res.render('tracklist', {
-                    title: '跟踪列表页',
-                    trackable: trackable
-                })
+            res.render('tracklist', {
+                title: '跟踪列表页',
+                trackable: trackable
             })
-    }
-    // list delete movie
+        })
+}
 exports.del = function(req, res) {
     var id = req.query.id;
 
