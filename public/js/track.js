@@ -23,8 +23,8 @@ $(function() {
             var target = tr.siblings('.resource').text()
             tr.siblings().eq(1).text('进行中')
 
-            $(this).addClass('active')
-            $(this).siblings('.stop-track').removeClass('active')
+            $(this).addClass('active btn-disabled')
+            $(this).siblings('.stop-track').removeClass('active btn-disabled')
 
             $.ajax({
                     type: 'get',
@@ -43,8 +43,8 @@ $(function() {
             var target = tr.siblings('.resource').text()
             tr.siblings().eq(1).text('已停止')
 
-            $(this).addClass('active')
-            $(this).siblings('.start-track').removeClass('active')
+            $(this).addClass('active btn-disabled')
+            $(this).siblings('.start-track').removeClass('active btn-disabled')
 
             $.ajax({
                     type: 'get',

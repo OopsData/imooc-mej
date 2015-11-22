@@ -5,7 +5,7 @@ block content
         .row
             table.table.table-hover.table-border.list.track
                 thead
-                    tr 
+                    tr
                         th 资源名称
                         th 当前状态
                         th 下次同步时间
@@ -15,9 +15,9 @@ block content
                         tr(class="item-id-#{item._id}")
                             td.resource #{item.url}
                             td #{item.state==true?'进行中':'已停止'}
-                            td #{item.next_sync_time==0?'--':item.next_sync_time}
+                            td #{item.next_sync_time==0?'--':moment(item.next_sync_time).format('MM/DD/YYYY h:mm:ss a')}
                             td.op
-                                .btn.btn-success.btn-sm.start-track(class="#{item.state==true?'active':''}") 开始
-                                .btn.btn-warning.btn-sm.stop-track(class="#{item.state==false?'active':''}") 停止
+                                .btn.btn-success.btn-sm.start-track(class="#{item.state==true?'active btn-disabled':''}") 开始
+                                .btn.btn-warning.btn-sm.stop-track(class="#{item.state==false?'active btn-disabled':''}") 停止
                                 .btn.btn-danger.btn-sm.del(data-id="#{item._id}") 删除
-    script(src="/js/track.js")  
+    script(src="/js/track.js")

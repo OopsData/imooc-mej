@@ -2,10 +2,25 @@ extends ../layout
 
 block content
     .container
+        .row.col-xs-12
+            h4 输入资源地址
+            .form-group
+                .col-xs-7
+                    //- http://www.iqiyi.com/v_19rrocjt3c.html
+                    //- http://www.iqiyi.com/v_19rrkqco7o.html
+                    input.form-control.resource(type="text" placeholder="http://www.iqiyi.com/v_19rrkkhmv8.html" value="http://www.iqiyi.com/v_19rrkkhmv8.html")
+                .col-xs-5
+                    a.btn.btn-primary.search(href="#") 查找
+                    .btn.btn-primary.add-track 添加
+        .row.col-xs-10.myAlert
+            .alert.alert-warning.alert-dismissible.hide(role="alert")
+                button.close
+                    span(aria-hidden="true") &times;
+                span
         .row
             table.table.table-hover.table-border.list
                 thead
-                    tr 
+                    tr
                         th 资源名称
                         th 播放数量
                         th 播放时长
@@ -28,4 +43,4 @@ block content
                             td #{item.score}
                             td.op
                                 .btn.btn-danger.btn-sm.del(data-id="#{item._id}") 删除
-    script(src="/js/movie.js")  
+    script(src="/js/movie.js")

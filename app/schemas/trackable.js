@@ -8,7 +8,7 @@ var TrackableSchema = new mongoose.Schema({
     state: Boolean,
     next_sync_time: {
         default: 0,
-        type: Number
+        type: Date
     }
 })
 
