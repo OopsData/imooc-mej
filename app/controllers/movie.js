@@ -46,15 +46,27 @@ exports.search = function(req, res) {
 
     if (url) {
         Movie
-            .findByUrl(url, function(err, movie) {
+            .findByUrl(url, function(err, movies) {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.json({
-                        success: 1,
-                        movie: movie
+                    res.render('movielist', {
+                        title: '资源列表页',
+                        movies: movies
                     })
                 }
+            })
+    } else {
+        Movie
+            .fetch(function(err, movies) {
+                if (err) {
+                    console.log(err);
+                }
+
+                res.render('movielist', {
+                    title: '资源列表页',
+                    movies: movies
+                })
             })
     }
 }

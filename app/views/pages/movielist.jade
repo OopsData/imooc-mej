@@ -4,14 +4,15 @@ block content
     .container
         .row.col-xs-12
             h4 输入资源地址
-            .form-group
-                .col-xs-7
-                    //- http://www.iqiyi.com/v_19rrocjt3c.html
-                    //- http://www.iqiyi.com/v_19rrkqco7o.html
-                    input.form-control.resource(type="text" placeholder="http://www.iqiyi.com/v_19rrkkhmv8.html" value="http://www.iqiyi.com/v_19rrkkhmv8.html")
-                .col-xs-5
-                    a.btn.btn-primary.search(href="#") 查找
-                    .btn.btn-primary.add-track 添加
+            form.form-horizontal(method="get", action="/admin/movie/search")
+                .form-group
+                    .col-xs-7
+                        //- http://www.iqiyi.com/v_19rrocjt3c.html
+                        //- http://www.iqiyi.com/v_19rrkqco7o.html
+                        input.form-control.resource(type="text" name="url" value="http://www.iqiyi.com/v_19rrkkhmv8.html")
+                    .col-xs-5
+                        button.btn.btn-primary(type="submit") 查找
+                        .btn.btn-primary.add-track 添加
         .row.col-xs-10.myAlert
             .alert.alert-warning.alert-dismissible.hide(role="alert")
                 button.close

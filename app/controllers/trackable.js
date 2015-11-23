@@ -34,7 +34,7 @@ exports.track = function(req, res) {
                 } else {
                     _trackable = new Trackable({
                         url: url,
-                        state: state
+                        state: state,
                     })
                     _trackable.save(function(err) {
                         if (err) {
