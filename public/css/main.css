@@ -3,7 +3,7 @@
 }
 
 .row {
-    margin-bottom: 40px
+    margin-bottom: 10px
 }
 
 .myAlert {
@@ -20,11 +20,8 @@
     margin-right: 10px
 }
 
-.myTable td {
-    max-width: 150px
-}
-
-th,td {
+th,
+td {
     text-align: center;
     word-break: keep-all;
     white-space: nowrap;
@@ -32,8 +29,12 @@ th,td {
     text-overflow: ellipsis;
 }
 
-.track {
-    width: 80%
+.list {
+    margin-bottom: 60px;
+}
+
+.track td:not(.op):not(.time) {
+    max-width: 120px
 }
 
 .op {

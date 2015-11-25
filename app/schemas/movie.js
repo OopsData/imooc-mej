@@ -1,15 +1,19 @@
 var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var ObjectId = Schema.Types.ObjectId
 
-var MovieSchema = new mongoose.Schema({
+var MovieSchema = new Schema({
     url: String,
+    vn: Number,
+    state: Boolean,
+    next_sync_time: {
+        default: 0,
+        type: Number
+    },
     subtitle: String,
-    playCount: Number,
     duration: Number,
-    upCount: Number,
-    downCount: Number,
-    commentCount: Number,
-    shareCount: Number,
-    score: Number,
+    publishTime: Number,
+    title: String,
     meta: {
         createAt: {
             type: Date,
@@ -22,7 +26,7 @@ var MovieSchema = new mongoose.Schema({
     }
 })
 
-MovieSchema.pre('save', function(next) {
+MovieSchema.pre('save', function(next) {    
     if (this.isNew) {
         this.meta.createAt = this.meta.updateAt = Date.now()
     } else {
@@ -33,22 +37,23 @@ MovieSchema.pre('save', function(next) {
 })
 
 MovieSchema.statics = {
-    fetch: function(cb) {
+    findByTitle: function(title, cb) {
         return this
-            .find({})
-            .sort('meta.updateAt')
+            .findOne({title: title})
             .exec(cb)
     },
-    findById: function(id, cb) {
-        return this
-            .findOne({_id: id})
-            .exec(cb)
-    },
-    findByUrl: function(url, cb) {
-        return this
-            .find({url: url})
-            .sort('meta.updateAt')
-            .exec(cb)
+    fetch: function(q, cb) {
+        if (q) {
+            return this
+                .find({'title': q})
+                .sort({'next_sync_time': -1})
+                .exec(cb)
+        } else {
+            return this
+                .find({})
+                .sort({'next_sync_time': -1})
+                .exec(cb)
+        }   
     }
 }
 

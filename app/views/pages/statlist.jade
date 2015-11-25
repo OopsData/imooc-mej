@@ -1,0 +1,45 @@
+extends ../layout
+
+block content
+    .container
+        .row.col-xs-12
+            form.form-horizontal(method="get", action="/admin/stat/search")
+                .form-group
+                    .col-xs-3
+                    .col-xs-5
+                        input.form-control.resource(type="text" name="q" value="大好时光")
+                    .col-xs-4
+                        button.btn.btn-primary(type="submit") 查找
+                    //- .col-xs-3.myAlert
+                    //-     .alert.alert-warning.alert-dismissible.hide(role="alert")
+                    //-         button.close
+                    //-             span(aria-hidden="true") &times;
+                    //-         span
+            
+        .row
+            table.table.table-hover.table-border.list
+                thead
+                    tr
+                        th 资源名称
+                        th 播放次数
+                        th 点赞数
+                        th 点踩数
+                        th 评论数
+                        th 分享数
+                        th 得分
+                        th 更新时间
+                        th 操作
+                tbody
+                    each item in stats
+                        tr(class="item-id-#{item._id}")
+                            td #{item.movie?item.movie.subtitle:''}
+                            td #{item.playCount}
+                            td #{item.upCount}
+                            td #{item.downCount}
+                            td #{item.commentCount}
+                            td #{item.shareCount}
+                            td #{item.score}
+                            td #{moment(item.meta.createAt).format('MM/DD/YYYY h:mm:ss a')}
+                            td.op
+                                .btn.btn-danger.btn-sm.del(data-id="#{item._id}") 删除
+    script(src="/js/stat.js")
