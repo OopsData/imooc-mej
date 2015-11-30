@@ -172,26 +172,36 @@ exports.list = function(req, res) {
         })
 }
 exports.del = function(req, res) {
-    var id = req.query.id;
+    var id = req.query.id.split(',')
 
     if (id) {
-        Movie
-            .remove({_id: id}, function(err, movie) {
+        for (var i=0; i<id.length; i++) {
+            async.series([
+                function(cb) {
+                    Movie
+                        .remove({_id: id[i]}, function(err, movie) {
+                            if (err) {
+                                cb('remove movie error')
+                            }
+                            cb(null)
+                        })
+                },
+                function(cb) {
+                    Stat
+                        .remove({'movie': id[i]}, function(err, stats) {
+                            if (err) {
+                                cb('remove stat error')
+                            }
+                            cb(null)
+                        })
+                }
+            ],
+            function(err, results) {
                 if (err) {
                     console.log(err);
-                } else {
-                    Stat
-                        .remove({'movie': id}, function(err, stats) {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                res.json({
-                                    success: 1
-                                })
-                            }
-                        })
-
                 }
             })
+        }
     }
+    res.send()
 }

@@ -15,6 +15,7 @@ block content
             table.table.table-hover.table-border.list.track
                 thead
                     tr
+                        th 
                         th 集数
                         th 专辑名称
                         th 资源名称
@@ -27,6 +28,9 @@ block content
                     each item in movies
                         tr(class="item-id-#{item._id}")
                             input(type="hidden" name="url" value=item.url)
+                            td
+                                label.checkbox
+                                    input(type="checkbox" name="subBox")
                             td #{item.vn}
                             td #{item.title}
                             td #{item.subtitle}
@@ -42,4 +46,19 @@ block content
                                     .btn.btn-success.btn-sm.start-track 开始
                                     .btn.btn-warning.btn-sm.stop-track(disabled="disabled") 停止
                                 .btn.btn-danger.btn-sm.del(data-id="#{item._id}") 删除
+                    if movies.length > 0
+                        tr
+                            td
+                                label.checkbox.all 
+                                    input(type="checkbox") 
+                            td 
+                            td
+                            td
+                            td
+                            td
+                            td
+                            td.op
+                                .btn.btn-success.btn-sm.start-track(disabled="disabled") 开始
+                                .btn.btn-warning.btn-sm.stop-track(disabled="disabled") 停止
+                                .btn.btn-danger.btn-sm.del 删除
     script(src="/js/movie.js")

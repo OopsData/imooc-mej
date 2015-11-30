@@ -30,7 +30,7 @@ td {
 }
 
 .list {
-    margin-bottom: 60px;
+    margin-bottom: 70px;
 }
 
 .track td:not(.op):not(.time) {
@@ -39,4 +39,12 @@ td {
 
 .op {
     width: 50px
+}
+
+.checkbox {
+    margin: 0px -15px 0 15px;
+}
+
+.all {
+    height: 10px
 }
