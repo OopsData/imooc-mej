@@ -7,7 +7,7 @@ block content
                 .form-group
                     .col-xs-3
                     .col-xs-5
-                        input.form-control.resource(type="text" name="q" value="大好时光")
+                        input.form-control.resource(type="text" name="q" value="蜀山战纪第3季")
                     .col-xs-4
                         button.btn.btn-primary(type="submit") 查找
                     //- .col-xs-3.myAlert
@@ -16,7 +16,7 @@ block content
                     //-             span(aria-hidden="true") &times;
                     //-         span
             
-        .row
+        .row.col-xs-12
             table.table.table-hover.table-border.list
                 thead
                     tr
@@ -42,4 +42,8 @@ block content
                             td #{moment(item.meta.createAt).format('MM/DD/YYYY h:mm:ss a')}
                             td.op
                                 .btn.btn-danger.btn-sm.del(data-id="#{item._id}") 删除
+            .page
+                ul.page-stat
+    
     script(src="/js/stat.js")
+    script(src="/js/bootstrap-paginator.min.js")

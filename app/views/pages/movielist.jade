@@ -7,7 +7,7 @@ block content
                 .form-group
                     .col-xs-3
                     .col-xs-5
-                        input.form-control.resource(type="text" name="q" value="大好时光" placeholder="请输入名称")
+                        input.form-control.resource(type="text" name="q" value="蜀山战纪第3季" placeholder="请输入名称")
                     .col-xs-4
                         .btn.btn-primary.add-track 添加
                         button.btn.btn-primary(type="submit") 查找
@@ -34,7 +34,7 @@ block content
                             td #{item.vn}
                             td #{item.title}
                             td #{item.subtitle}
-                            td #{item.state==true?'进行中':'已停止'}
+                            td.state #{item.state==true?'进行中':'已停止'}
                             td #{item.duration}
                             //- td.time #{moment(item.publishTime).format('MM/DD/YYYY h:mm:ss a')}
                             td.time #{item.next_sync_time===0?'--':moment(item.next_sync_time).format('MM/DD/YYYY h:mm:ss a')}
@@ -58,7 +58,10 @@ block content
                             td
                             td
                             td.op
-                                .btn.btn-success.btn-sm.start-track(disabled="disabled") 开始
-                                .btn.btn-warning.btn-sm.stop-track(disabled="disabled") 停止
+                                .btn.btn-success.btn-sm.start-track 开始
+                                .btn.btn-warning.btn-sm.stop-track 停止
                                 .btn.btn-danger.btn-sm.del 删除
+            .page
+                ul.page-movie
     script(src="/js/movie.js")
+    script(src="/js/bootstrap-paginator.min.js")

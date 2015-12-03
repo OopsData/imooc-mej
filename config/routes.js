@@ -30,7 +30,7 @@ module.exports = function(app) {
     // movie model
     app.get('/admin/movie/search', User.signinRequired, User.adminRequired, Movie.search)
     app.get('/admin/movie/add', User.signinRequired, User.adminRequired, Movie.add)
-    app.get('/admin/movie/track', User.signinRequired, User.adminRequired, Movie.track)
+    app.post('/admin/movie/track', User.signinRequired, User.adminRequired, Movie.track)
     app.get('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.list)
     app.delete('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.del)
 

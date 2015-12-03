@@ -22,4 +22,12 @@ $(function() {
                     }
                 })
         })
+    //分页功能
+    var options = {
+        currentPage: 2,
+        totalPages: 5,
+        numberOfPages: 5,
+        bootstrapMajorVersion: 3
+    }
+    $('.page-stat').bootstrapPaginator(options)
 })

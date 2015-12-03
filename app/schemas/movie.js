@@ -3,6 +3,7 @@ var Schema = mongoose.Schema
 var ObjectId = Schema.Types.ObjectId
 
 var MovieSchema = new Schema({
+    stats: [{type: ObjectId, ref: 'Stat'}],
     url: String,
     vn: Number,
     state: Boolean,

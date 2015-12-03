@@ -4,9 +4,8 @@
 $(function() {
     // 删除跟踪任务
     $('.del')
-        .click(function(e) {
-            var target = $(e.target)
-            var id = target.data('id')
+        .click(function() {
+            var id = $(this).data('id')
             var tr
 
             if (id !== undefined) {
@@ -25,6 +24,10 @@ $(function() {
                             trs.push($('.item-id-' + item))
                         }
                     })
+                if (ids.length == 0) {
+                    alert('请选择！')
+                    return false
+                }
             }
             id = id || ids.join(',')
             tr = tr || trs
@@ -63,16 +66,39 @@ $(function() {
         .click(function() {
             var tr = $(this).parent()
             var target = tr.siblings('input[name="url"]').val()
-            tr.siblings().eq(3).text('进行中')
 
-            $(this).attr('disabled', true)
-            $(this).siblings('.stop-track').attr('disabled', false)
+            if (target != undefined) {
+                tr.siblings('.state').text('进行中')
+                $(this).attr('disabled', true)
+                $(this).siblings('.stop-track').attr('disabled', false)
+            } else {
+                var targets = []
+                $("input[name='subBox']")
+                    .each(function() {
+                        if ($(this).prop('checked') === true) {
+                            var _tr = $(this).parent().parent()
+                            _tr.siblings('.state').text('进行中')
+                            _tr.siblings('.op').children('.start-track').attr('disabled', true)
+                            _tr.siblings('.op').children('.stop-track').attr('disabled', false)
+                            var item = _tr.siblings('input').val()
+                            targets.push(item)
+                        }
+                    })
 
+                if (targets.length == 0) {
+                    alert('请选择！')
+                    return false
+                }
+            }
+
+            target = target || targets.join(',')
             $.ajax({
-                    type: 'get',
-                    url: '/admin/movie/track' +
-                        '?url=' + target +
-                        '&state=1'
+                    type: 'post',
+                    url: '/admin/movie/track',
+                    data: {
+                        'url': target,
+                        'state': 1
+                    }
                 })
                 .done(function(data) {
                     // console.log(data);
@@ -84,16 +110,39 @@ $(function() {
         .click(function() {
             var tr = $(this).parent()
             var target = tr.siblings('input[name="url"]').val()
-            tr.siblings().eq(3).text('已停止')
 
-            $(this).attr('disabled', true)
-            $(this).siblings('.start-track').attr('disabled', false)
+            if (target != undefined) {
+                tr.siblings('.state').text('已停止')
+                $(this).attr('disabled', true)
+                $(this).siblings('.start-track').attr('disabled', false)
+            } else {
+                var targets = []
+                $("input[name='subBox']")
+                    .each(function() {
+                        if ($(this).prop('checked') === true) {
+                            var _tr = $(this).parent().parent()
+                            _tr.siblings('.state').text('已停止')
+                            _tr.siblings('.op').children('.start-track').attr('disabled', false)
+                            _tr.siblings('.op').children('.stop-track').attr('disabled', true)
+                            var item = $(this).parent().parent().siblings('input').val()
+                            targets.push(item)
+                        }
+                    })
+                if (targets.length == 0) {
+                    alert('请选择！')
+                    return false
+                }
+            }
+
+            target = target || targets.join(',')
 
             $.ajax({
-                    type: 'get',
-                    url: '/admin/movie/track' +
-                        '?url=' + target +
-                        '&state=0'
+                    type: 'post',
+                    url: '/admin/movie/track',
+                    data: {
+                        'url': target,
+                        'state': 0
+                    }
                 })
                 .done(function(data) {
                     // console.log(data);
@@ -115,4 +164,12 @@ $(function() {
             $('.all')
                 .prop('checked', $subBox.length == $("input[name='subBox']:checked").length ? true : false)
         })
+    // 分页功能
+    var options = {
+        currentPage: 2,
+        totalPages: 5,
+        numberOfPages: 5,
+        bootstrapMajorVersion: 3
+    }
+    $('.page-movie').bootstrapPaginator(options)
 })

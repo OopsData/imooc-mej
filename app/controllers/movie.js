@@ -124,38 +124,42 @@ exports.add = function(req, res) {
     }
 }
 exports.track = function(req, res) {
-    var url = req.query.url;
-    var state = req.query.state == 1 ? true : false
+    var url = req.body.url.split(',')
+    var state = req.body.state == 1 ? true : false
     var movieObj = {
         state: state
     }
     var _movie
 
     if (url) {
-        Movie
-            .findOne({url: url}, function(err, data) {
-                if (err) {
-                    console.log(err);
-                }
-                if (data) {
-                    _movie = _extend(data, movieObj)
-                    _movie.save(function(err) {
+        for (var i=0; i<url.length; i++) {
+            (function(i) {
+                Movie
+                    .findOne({url: url[i]}, function(err, data) {
                         if (err) {
                             console.log(err);
                         }
-                    })
-                } else {
-                    _movie = new Movie({
-                        url: url,
-                        state: state,
-                    })
-                    _movie.save(function(err) {
-                        if (err) {
-                            console.log(err);
+                        if (data) {
+                            _movie = _extend(data, movieObj)
+                            _movie.save(function(err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            })
+                        } else {
+                            _movie = new Movie({
+                                url: url,
+                                state: state,
+                            })
+                            _movie.save(function(err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            })
                         }
                     })
-                }
-            })
+            }(i))
+        }
     }
 }
 exports.list = function(req, res) {
@@ -176,31 +180,33 @@ exports.del = function(req, res) {
 
     if (id) {
         for (var i=0; i<id.length; i++) {
-            async.series([
-                function(cb) {
-                    Movie
-                        .remove({_id: id[i]}, function(err, movie) {
-                            if (err) {
-                                cb('remove movie error')
-                            }
-                            cb(null)
-                        })
-                },
-                function(cb) {
-                    Stat
-                        .remove({'movie': id[i]}, function(err, stats) {
-                            if (err) {
-                                cb('remove stat error')
-                            }
-                            cb(null)
-                        })
-                }
-            ],
-            function(err, results) {
-                if (err) {
-                    console.log(err);
-                }
-            })
+            (function(i) {
+                async.series([
+                    function(cb) {
+                        Movie
+                            .remove({_id: id[i]}, function(err, movie) {
+                                if (err) {
+                                    cb('remove movie error')
+                                }
+                                cb(null)
+                            })
+                    },
+                    function(cb) {
+                        Stat
+                            .remove({'movie': id[i]}, function(err, stats) {
+                                if (err) {
+                                    cb('remove stat error')
+                                }
+                                cb(null)
+                            })
+                    }
+                ],
+                function(err, results) {
+                    if (err) {
+                        console.log(err);
+                    }
+                })
+            }(i))
         }
     }
     res.send()

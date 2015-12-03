@@ -1,5 +1,6 @@
 var Stat = require('../models/stat')
 var Movie = require('../models/movie')
+var async = require('async')
 
 /* {{{ private function _extend() */
 var _extend = function(a, b) {
@@ -46,35 +47,35 @@ exports.search = function(req, res) {
     var q = req.query.q;
 
     if (q) {
-        Movie
-            .find({title: q})
-            .exec(function(err, movies) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    var statAll = []
-                    for (var i=0; i<movies.length; i++) {
-                        (function(i) {
-                            Stat
-                                .find({movie: movies[i]._id})
-                                .exec(function(err, stat) {
-                                    (function() {
-                                        console.log('aaa '+stat);
-                                        // statAll.push(stat)
-                                        statAll = _extend(statAll, stat)
-                                    }())
-                                })
-                            console.log('bbb '+statAll);
-                            // statAll.push(i)
-                        }(i))
-                    }
-                    console.log(statAll);
-                    // res.render('statlist', {
-                    //     title: '统计列表页',
-                    //     stats: statAll
-                    // })
-                }
-            })
+        // Movie
+        //     .find({title: q})
+        //     .exec(function(err, movies) {
+        //         if (err) {
+        //             console.log(err);
+        //         } else {
+        //             var statAll = []
+        //             for (var i=0; i<movies.length; i++) {
+        //                 (function(i) {
+        //                     for (var j=0; j<movies[i].stats.length; j++) {
+        //                         statAll.push(movies[i].stats)
+        //                     }
+        //                 }(i))
+        //             }
+        //             for (var k=0; k<statAll.length; k++) {
+        //                 Stat
+        //                     .find({_id: statAll[k]})
+        //                     .exec(function(err, stats) {
+
+        //                     })
+                        
+        //             }
+        //         }
+        //     })
+        // console.log(statAll);
+        res.render('statlist', {
+            title: '统计列表页',
+            stats: {}
+        })
     } else {
         Stat
             .find({})
